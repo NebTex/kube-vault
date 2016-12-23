@@ -34,7 +34,6 @@ spec:
                 		"consul": {
                 			"path": "vault",
                 			"address": "consul.kv:8500",
-                			"disable_registration": "true"
                 		}
                 	}
                 }
