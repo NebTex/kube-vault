@@ -23,7 +23,6 @@ spec:
           - name: VAULT_LOCAL_CONFIG
             value: |
               {"cluster_name": "vault",
-               "disable_mlock": true,
                "listener": {"tcp" :{ "address": "127.0.0.1:8200", "tls_disable" : 1}},
                 "backend": { "consul": {"path": "vault", "address": "consul.kv:8500"}}
                 }
