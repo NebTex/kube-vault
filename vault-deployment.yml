@@ -11,27 +11,27 @@ spec:
         app: vault
     spec:
       containers:
-      - name: vault
-        args:
-          - server
-        image: vault:0.6.4
-        env:
-          - name: VAULT_REDIRECT_ADDR
-            value: http://vault:8200
-          - name: VAULT_CLUSTER_ADDR
-            value: http://vault:8201
-          - name: VAULT_LOCAL_CONFIG
-            value: |
-              {"cluster_name": "vault",
-               "listener": {"tcp" :{ "address": "127.0.0.1:8200", "tls_disable" : 1}},
-                "backend": { "consul": {"path": "vault", "address": "consul.kv:8500"}}
-                }
-        ports:
-          - containerPort: 8200
-            name: vault
-          - containerPort: 8201
-            name: cluster-addr
-         securityContext:
-           capabilities:
-             add:
-               - IPC_LOCK
+        - name: vault
+          args:
+            - server
+          image: vault:0.6.4
+          env:
+            - name: VAULT_REDIRECT_ADDR
+              value: http://vault:8200
+            - name: VAULT_CLUSTER_ADDR
+              value: http://vault:8201
+            - name: VAULT_LOCAL_CONFIG
+              value: |
+                {"cluster_name": "vault",
+                 "listener": {"tcp" :{ "address": "127.0.0.1:8200", "tls_disable" : 1}},
+                  "backend": { "consul": {"path": "vault", "address": "consul.kv:8500"}}
+                  }
+          ports:
+            - containerPort: 8200
+              name: vault
+            - containerPort: 8201
+              name: cluster-addr
+          securityContext:
+             capabilities:
+               add:
+                 - IPC_LOCK
