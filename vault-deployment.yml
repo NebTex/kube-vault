@@ -24,7 +24,7 @@ spec:
               value: |
                 {"cluster_name": "vault",
                  "listener": {"tcp" :{ "address": "0.0.0.0:8200", "tls_disable" : 1}},
-                  "backend": { "consul": {"path": "vault", "address": "consul.kv:8500"}}
+                  "backend": { "consul": {"path": "vault", "address": "consul.kv:8500", "disable_registration":true}}
                   }
           ports:
             - containerPort: 8200
