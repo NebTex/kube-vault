@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 
 if kubectl get secrets --namespace vault | grep -q "vault-secrets"; then
-    echo "Secrets already exists"
+    echo "Vault secrets already exists"
 else
-    # download sigil
-    curl -fsSL https://github.com/gliderlabs/sigil/releases/download/v0.4.0/sigil_0.4.0_Linux_x86_64.tgz | tar -zxC /tmp
+    sigil -p -f vault-secrets.yml secret="$(sigil -p -f config.json  acl_vault_token=${acl_vault_token:?} \
+| base64 -w 0)" | kubectl  apply --validate --overwrite -f -
+fi
 
-    /tmp/sigil -p -f vault-secrets.yml secret="$(/tmp/sigil -p -f config.json  AclToken=${AclToken:?} \
+if kubectl get secrets --namespace vault | grep -q "consul-secrets"; then
+    echo "Consul secrets already exists"
+else
+    sigil -p -f consul-secrets.yml secret="$(sigil -p -f consul-config.json  acl_agent_token=${acl_agent_token:?} \
 | base64 -w 0)" | kubectl  apply --validate --overwrite -f -
 fi
 

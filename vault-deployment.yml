@@ -15,7 +15,44 @@ spec:
           secret:
             secretName: vault-secrets
             defaultMode: 0777
+        - name: consul-config-volume
+          secret:
+            secretName: consul-secrets
+            items:
+              - key: consul.json
+                path: consul.json
+                mode: 0777
       containers:
+        - args:
+            - "consul"
+            - "agent"
+            - "-config-dir=/data/config"
+            - "-client"
+            - "-datacenter"
+            - "global"
+            - "-client"
+            - "0.0.0.0"
+            - "-retry-join"
+            - "consul-leader.kv"
+          image: consul:0.7.2
+          imagePullPolicy: IfNotPresent
+          name: consul-vault-client
+          volumeMounts:
+            - name: consul-config-volume
+              mountPath: /data/config
+          ports:
+            - containerPort: 8600
+              name: dns-port
+            - containerPort: 8500
+              name: ui-port
+            - containerPort: 8400
+              name: cli-port
+            - containerPort: 8301
+              name: serflan
+            - containerPort: 8302
+              name: serfwan
+            - containerPort: 8300
+              name: server
         - name: vault
           args:
             - server

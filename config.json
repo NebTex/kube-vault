@@ -9,8 +9,8 @@
     "backend": {
         "consul": {
             "path": "vault/",
-            "address": "consul.kv:8500",
-            "token": "${AclToken:?}"
+            "address": "127.0.0.1:8500",
+            "token": "${acl_vault_token:?}"
         }
     }
 }

@@ -1,0 +1,3 @@
+{"acl_datacenter": "global",
+  "acl_agent_token": "${acl_agent_token:?}",
+  "acl_enforce_version_8": true}
